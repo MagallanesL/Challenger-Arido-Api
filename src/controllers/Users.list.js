@@ -1,9 +1,9 @@
-import getConnection from "../database/database";
+import { getConnection } from "../database/database";
 
 const getUsers = async (req, res) => {
   try {
     const connection = await getConnection();
-    const result = await connection.query("SELECT idalias,mail FROM language");
+    const result = await connection.query("SELECT idalias,mail FROM usuarios");
     res.json(result);
   } catch (error) {
     res.status(500);
@@ -16,7 +16,7 @@ const getUser = async (req, res) => {
     const { idalias } = req.params;
     const connection = await getConnection();
     const result = await connection.query(
-      "SELECT idalias, mail FROM language WHERE idalias = ?",
+      "SELECT idalias, mail FROM usuarios WHERE idalias = ?",
       idalias
     );
     res.json(result);
@@ -36,7 +36,7 @@ const addUsers = async (req, res) => {
 
     const Users = { idalias, mail };
     const connection = await getConnection();
-    await connection.query("INSERT INTO language SET ?", Users);
+    await connection.query("INSERT INTO usuarios SET ?", Users);
     res.json({ message: "User added" });
   } catch (error) {
     res.status(500);
